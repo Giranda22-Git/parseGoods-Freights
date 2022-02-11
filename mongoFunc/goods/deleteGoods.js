@@ -1,7 +1,7 @@
 const mongoGoods = require('../../models/goods.js')
 
 const deleteGoods = async function (goods, count) {
-  if (!count) count = goods.length
+  if (!count || count > goods.length) count = goods.length
 
   const listOfDeletedGoods = new Array()
 
