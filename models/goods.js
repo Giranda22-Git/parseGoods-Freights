@@ -1,22 +1,23 @@
 const mongoose = require('mongoose')
 
 const good = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
+  title: {
+    type: String
   },
-  crmId: {
-    type: String,
-    required: true
+  price: {
+    type: Number
   },
-  offerData: {
-    type: Object,
-    required: true
+  description: {
+    type: String
   },
-  count: {
-    type: Number,
-    required: true,
-    min: 0
+  category: {
+    type: String
+  },
+  image: {
+    type: String
+  },
+  rating: {
+    type: Object
   }
 })
 

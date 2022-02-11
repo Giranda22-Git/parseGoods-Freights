@@ -48,7 +48,8 @@ async function init(serverData) {
 		})
 
     // require all end points
-		//app.use('/webhook', require('./endPoints/webhook.js'))
+		app.use('/goods', require('./endPoints/goods.js'))
+    app.use('/suppliers', require('./endPoints/suppliers.js'))
 	})
 
   // require bot commands
