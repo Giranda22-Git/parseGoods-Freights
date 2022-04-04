@@ -22,6 +22,9 @@ const supplier = new mongoose.Schema({
   },
   postParams: {
     type: Object
+  },
+  parserUrl: {
+    type: String
   }
 })
 

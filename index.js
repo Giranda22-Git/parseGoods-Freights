@@ -48,7 +48,7 @@ async function init(serverData) {
 		})
 
     // require all end points
-		app.use('/goods', require('./endPoints/goods.js'))
+		app.use('/products', require('./endPoints/products.js'))
     app.use('/suppliers', require('./endPoints/suppliers.js'))
 	})
 

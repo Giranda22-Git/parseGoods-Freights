@@ -1,4 +1,4 @@
-const getGoods = require('./getGoods.js')
+const getProducts = require('./getProducts.js')
 const isObject = require('../../staticData/lowLevelFunctions.js').isObject
 
 const productIsUnique = async function (newProduct) {
@@ -6,9 +6,9 @@ const productIsUnique = async function (newProduct) {
 
   delete newProduct?.id
 
-  const allGoods = await getGoods({})
+  const allProducts = await getProducts({})
 
-  for (const element of allGoods) {
+  for (const element of allProducts) {
     let product = element
 
     const coincidence = new Array()

@@ -2,9 +2,9 @@ const axios = require('axios').default
 
 const getSuppliers = require('../suppliers/getSuppliers.js')
 const productIsUnique = require('./productIsUnique.js')
-const createGoods = require('./createGoods.js')
+const createProducts = require('./createProducts.js')
 
-const parseGoods = async function () {
+const parseProducts = async function () {
   const suppliers = await getSuppliers({})
 
   const listOfNewProducts = new Array()
@@ -18,7 +18,7 @@ const parseGoods = async function () {
       const isUnique = await productIsUnique(product)
 
       if (isUnique) {
-        const result = await createGoods(product)
+        const result = await createProducts(product)
 
         listOfNewProducts.push(result)
       }
@@ -28,4 +28,4 @@ const parseGoods = async function () {
   return listOfNewProducts
 }
 
-module.exports = parseGoods
+module.exports = parseProducts
