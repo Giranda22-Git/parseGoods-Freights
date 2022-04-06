@@ -16,7 +16,7 @@ const bitrixApi = async function (method, gateway, data) {
     return result
   }
   catch (err) {
-    console.log('err: ', err.response.data)
+    console.log('err: ', err)
   }
 }
 

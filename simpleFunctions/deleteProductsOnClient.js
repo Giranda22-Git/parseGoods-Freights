@@ -1,7 +1,29 @@
 const bitrixApi = require('./bitrixApi.js')
 
 const deleteProductsOnClient = async function (options) {
-  if (options.id) {
+  if (options.all) {
+    const params = {
+      "select": [
+        "id", "iblockId",
+        "name",
+        "purchasingPrice",
+        "previewPicture",
+        "detailPicture",
+        "price"
+      ],
+      "filter":{
+        "iblockId": 7
+      },
+      "start": 1
+    }
+    const allProductsOnClient = await bitrixApi('post', 'catalog.product.list', params)
+
+    for (const product of allProductsOnClient.result.products) {
+      const result = await bitrixApi('post', 'catalog.product.delete', {id: product.id})
+      console.log(result)
+    }
+  }
+  else if (options.id) {
     const result = await bitrixApi('post', 'catalog.product.delete', {id: options.id})
     console.log(result)
   } else {

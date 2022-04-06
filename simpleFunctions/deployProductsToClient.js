@@ -1,5 +1,6 @@
 const bitrixApi = require('./bitrixApi.js')
 const getBitrixCategorie = require('../mongoFunc/bitrixCategories/getBitrixCategorie.js')
+const getPropertyIdFromClient = require('./getPropertyIdFromClient.js')
 const axios = require('axios').default
 const settings = require('../staticData/mountedData.js').data
 
@@ -13,7 +14,7 @@ const deployProductsToClient = async function (products) {
 
     const img = await getImgBase64(product.images[0])
 
-    const params = {
+    let params = {
       fields: {
         iblockId: settings.mainIblockId,
         iblockSectionId: targetBitrixCategorie.id,
@@ -29,12 +30,7 @@ const deployProductsToClient = async function (products) {
       }
     }
 
-    if (product.brandName) {
-      params.fields.property41 = {
-        "value": product.brandName,
-        "valueId": "4128"
-      }
-    }
+    params = await collectionOfProperties(product, params)
 
     console.log(params)
 
@@ -54,8 +50,7 @@ const deployProductsToClient = async function (products) {
         }
       }
     }
-    const check = await bitrixApi('post', 'catalog.price.modify', priceParams)
-    console.log(check)
+    await bitrixApi('post', 'catalog.price.modify', priceParams)
   }
   return true
 }
@@ -81,4 +76,22 @@ async function getImgBase64 (url) {
     console.log('Повторная попытка загрузки изображения')
     return await getImgBase64(url)
   }
+}
+
+async function collectionOfProperties (product, params) {
+  const resultParams = params
+
+  console.log('debug: ', resultParams)
+
+  if (product.properties) {
+    for (const key in product.properties) {
+      const propertyId = await getPropertyIdFromClient(key)
+
+      resultParams.fields['property' + propertyId] = {
+        value: product.properties[key]
+      }
+    }
+  }
+
+  return resultParams
 }
