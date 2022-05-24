@@ -2,7 +2,7 @@ const mongoProduct = require('../../models/products.js')
 const getProduct = require('./getProduct.js')
 
 const updateProduct = async function (supplier, product) {
-  const targetProduct = await getProduct({ supplier, originProductId: product.originProductId })
+  const targetProduct = await getProduct({ supplier, originProductId: product.originProductId, lang: product.lang })
 
   const resLog = await mongoProduct.updateOne(
     { supplier, originProductId: product.originProductId },
@@ -18,7 +18,8 @@ const updateProduct = async function (supplier, product) {
       description: product.description,
       categories: targetProduct.categories,
       images: product.images,
-      supplier: product.supplier
+      supplier: product.supplier,
+      lang: product.lang
     }
   )
 

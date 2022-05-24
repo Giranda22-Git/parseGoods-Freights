@@ -37,6 +37,10 @@ const product = new mongoose.Schema({
   },
   supplier: {
     type: String
+  },
+  lang: {
+    type: String,
+    enum: ['ru', 'en']
   }
 })
 

@@ -36,7 +36,7 @@ app.use(cors())
 
 // function of init all process
 async function init(serverData) {
-	await mongoose.connect(serverData.mongoUrl, {
+	mongoose.connect(serverData.mongoUrl, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true
 	})
