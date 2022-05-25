@@ -3,10 +3,11 @@ const getBitrixCategorie = require('../mongoFunc/bitrixCategories/getBitrixCateg
 const createBitrixCategorie = require('../mongoFunc/bitrixCategories/createBitrixCategorie.js')
 const settings = require('../staticData/mountedData.js').data
 
-const deployCategoriesToClient = async function (products) {
+const deployCategoriesToClient = async function (products, iblockId) {
   for (const product of products) {
     for (const [index, categorieName] of product.categories.entries()) {
       const targetBitrixCategorie = await getBitrixCategorie({
+        iblockId,
         supplier: product.supplier,
         name: categorieName,
         categorieLevel: index
@@ -14,6 +15,7 @@ const deployCategoriesToClient = async function (products) {
 
       if (!targetBitrixCategorie) {
         const targetParentBitrixCategorie = await getBitrixCategorie({
+          iblockId,
           supplier: product.supplier,
           name: product.categories?.[index - 1],
           categorieLevel: index - 1
@@ -28,7 +30,7 @@ const deployCategoriesToClient = async function (products) {
         const newSectionParams = {
           fields: {
             code: makeid(25),
-            iblockId: settings.mainIblockId,
+            iblockId,
             iblockSectionId,
             name: categorieName
           }

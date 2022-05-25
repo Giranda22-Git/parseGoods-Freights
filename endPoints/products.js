@@ -86,9 +86,9 @@ router.post('/productCount/categorie', async (req, res) => {
 router.post('/deploy/products', async (req, res) => {
   const data = req.body
 
-  const products = await getProducts({ supplier: data.supplier })
+  const products = await getProducts({ supplier: data.supplier, lang: data.lang })
 
-  const result = await deployProductsToClient(products)
+  const result = await deployProductsToClient(products, data.iblockId)
 
   res.json(result)
 })
@@ -97,9 +97,9 @@ router.post('/deploy/products', async (req, res) => {
 router.post('/deploy/categories', async (req, res) => {
   const data = req.body
 
-  const products = await getProducts({ supplier: data.supplier })
+  const products = await getProducts({ supplier: data.supplier, lang: data.lang })
 
-  await deployCategoriesToClient(products)
+  await deployCategoriesToClient(products, data.iblockId)
 
   res.sendStatus(200)
 })

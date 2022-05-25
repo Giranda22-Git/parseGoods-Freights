@@ -4,9 +4,10 @@ const getPropertyIdFromClient = require('./getPropertyIdFromClient.js')
 const axios = require('axios').default
 const settings = require('../staticData/mountedData.js').data
 
-const deployProductsToClient = async function (products) {
+const deployProductsToClient = async function (products, iblockId) {
   for (const product of products) {
     const targetBitrixCategorie = await getBitrixCategorie({
+      iblockId,
       supplier: product.supplier,
       name: product.categories[product.categories.length - 1],
       categorieLevel: product.categories.length - 1
@@ -16,7 +17,7 @@ const deployProductsToClient = async function (products) {
 
     let params = {
       fields: {
-        iblockId: settings.mainIblockId,
+        iblockId,
         iblockSectionId: targetBitrixCategorie.id,
         name: product.productName,
         purchasingCurrency: 'KZT',
@@ -30,7 +31,7 @@ const deployProductsToClient = async function (products) {
       }
     }
 
-    params = await collectionOfProperties(product, params)
+    params = await collectionOfProperties(product, params, iblockId)
 
     console.log(params)
 
@@ -78,14 +79,14 @@ async function getImgBase64 (url) {
   }
 }
 
-async function collectionOfProperties (product, params) {
+async function collectionOfProperties (product, params, iblockId) {
   const resultParams = params
 
   console.log('debug: ', resultParams)
 
   if (product.properties) {
     for (const key in product.properties) {
-      const propertyId = await getPropertyIdFromClient(key)
+      const propertyId = await getPropertyIdFromClient(key, iblockId)
 
       resultParams.fields['property' + propertyId] = {
         value: product.properties[key]

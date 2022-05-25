@@ -21,6 +21,10 @@ const categorie = new mongoose.Schema({
   },
   categorieLevel: {
     type: Number
+  },
+  lang: {
+    type: String,
+    enum: ['ru', 'en']
   }
 })
 

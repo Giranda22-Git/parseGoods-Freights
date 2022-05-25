@@ -3,16 +3,20 @@ const getBitrixProperty = require('../mongoFunc/bitrixProperties/getBitrixProper
 const createBitrixProperty = require('../mongoFunc/bitrixProperties/createBitrixProperty.js')
 const settings = require('../staticData/mountedData.js').data
 
-const getPropertyIdFromClient = async function (propertyName) {
-  let targetProperty = await getBitrixProperty({ name: propertyName })
+const getPropertyIdFromClient = async function (propertyName, iblockId) {
+  let targetProperty = await getBitrixProperty({ name: propertyName, iblockId })
 
   if (!targetProperty) {
     const bitrixCreatePropertyUrl = encodeURI(settings.urls.bitrixCreatePropertyUrl + propertyName)
 
+    console.log(bitrixCreatePropertyUrl)
+
     const newPropertyResult = (await axios.get(bitrixCreatePropertyUrl)).data
 
+    console.log('newPropertyResult: ', newPropertyResult)
+
     const newLocalePropertyResult = await createBitrixProperty({
-      iblockId: settings.mainIblockId,
+      iblockId,
       id: newPropertyResult.result,
       name: propertyName
     })
