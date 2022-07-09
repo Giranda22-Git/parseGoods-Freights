@@ -12,11 +12,12 @@ const deleteProductsOnClient = async function (options) {
         "price"
       ],
       "filter":{
-        "iblockId": 7
+        "iblockId": options.iblockId
       },
       "start": 1
     }
     const allProductsOnClient = await bitrixApi('post', 'catalog.product.list', params)
+    console.log(allProductsOnClient)
 
     for (const product of allProductsOnClient.result.products) {
       const result = await bitrixApi('post', 'catalog.product.delete', {id: product.id})

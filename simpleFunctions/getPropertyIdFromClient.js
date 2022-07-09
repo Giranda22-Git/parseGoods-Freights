@@ -7,7 +7,7 @@ const getPropertyIdFromClient = async function (propertyName, iblockId) {
   let targetProperty = await getBitrixProperty({ name: propertyName, iblockId })
 
   if (!targetProperty) {
-    const bitrixCreatePropertyUrl = encodeURI(settings.urls.bitrixCreatePropertyUrl + propertyName)
+    const bitrixCreatePropertyUrl = encodeURI(`${settings.urls.bitrixCreatePropertyUrl}?create=${propertyName}&IBLOCK_ID=$${iblockId}`)
 
     console.log(bitrixCreatePropertyUrl)
 
@@ -15,16 +15,19 @@ const getPropertyIdFromClient = async function (propertyName, iblockId) {
 
     console.log('newPropertyResult: ', newPropertyResult)
 
-    const newLocalePropertyResult = await createBitrixProperty({
-      iblockId,
-      id: newPropertyResult.result,
-      name: propertyName
-    })
+    if (newPropertyResult.status === 200) {
 
-    console.log(newLocalePropertyResult)
+      const newLocalePropertyResult = await createBitrixProperty({
+        iblockId,
+        id: newPropertyResult.result.result,
+        name: propertyName
+      })
 
-    targetProperty = {
-      id: newPropertyResult.result
+      console.log(newLocalePropertyResult)
+
+      targetProperty = {
+        id: newPropertyResult.result.result
+      }
     }
   }
 

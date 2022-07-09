@@ -6,10 +6,10 @@ const data = {
   standartLanguageCode: 'ru',
   retailCrmUrl: 'https://cloudvape.retailcrm.ru/api/v5/',
   retailCrmApiKey: '?apiKey=NUs8xtV0sowUdPt3efhCldls2NhsaCxK',
-  bitrixToken: '88o3mpjz2izi6zyd',
+  bitrixToken: '2mqhmov4zvpgupbo',
   mainIblockId: 7,
   urls: {
-    bitrixCreatePropertyUrl: 'https://freights.kz/api/example/check?create='
+    bitrixCreatePropertyUrl: 'http://freights.kz/api2/iblock.element.property.add'
   },
   adminChatId: -575693357,
   logsChatId: -758687223,
